@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * sync.mjs — soulsync DB → Garage S3 + Cloudflare D1
  * Runs inside Docker. Triggered by the Mac app on demand.

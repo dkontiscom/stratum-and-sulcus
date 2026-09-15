@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import {
 	env,
 	createExecutionContext,
@@ -7,23 +8,31 @@ import {
 import { describe, it, expect } from "vitest";
 import worker from "../src/index";
 
-// For now, you'll need to do something like this to get a correctly-typed
-// `Request` to pass to `worker.fetch()`.
 const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
 
-describe("Hello World worker", () => {
-	it("responds with Hello World! (unit style)", async () => {
-		const request = new IncomingRequest("http://example.com");
-		// Create an empty context to pass to `worker.fetch()`.
+// Tests that don't require a populated database — auth is rejected before any DB query
+// when no credentials are provided at all.
+describe("Subsonic auth — unauthenticated requests", () => {
+	it("returns XML error (code 40) for missing credentials", async () => {
+		const request = new IncomingRequest("http://example.com/rest/ping");
 		const ctx = createExecutionContext();
 		const response = await worker.fetch(request, env, ctx);
-		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
 		await waitOnExecutionContext(ctx);
-		expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
+		const text = await response.text();
+		expect(text).toContain('status="failed"');
+		expect(text).toContain('code="40"');
 	});
 
-	it("responds with Hello World! (integration style)", async () => {
-		const response = await SELF.fetch("https://example.com");
-		expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
+	it("returns JSON error (code 40) when f=json", async () => {
+		const response = await SELF.fetch("https://example.com/rest/ping?f=json");
+		const data = await response.json() as any;
+		expect(data["subsonic-response"].status).toBe("failed");
+		expect(data["subsonic-response"].error.code).toBe(40);
 	});
 });
+
+// Tests that require a populated D1 database:
+// it.todo("returns ping success with valid admin credentials")
+// it.todo("getArtists returns artist list")
+// it.todo("getSong returns track metadata")
+// it.todo("stream returns 302 redirect to presigned S3 URL")

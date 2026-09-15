@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Md5 } from "ts-md5";
 export interface Env {
   DB: D1Database;

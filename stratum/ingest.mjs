@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Stratum ingest — reads audio files from Garage S3 → parses tags → D1
  * No Navidrome dependency.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Stratum enrich — reads SoulSync SQLite DB → pushes enriched data to D1
  *

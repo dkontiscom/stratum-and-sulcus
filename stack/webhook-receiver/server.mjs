@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { createServer } from 'http';
 import { spawn } from 'child_process';
 
