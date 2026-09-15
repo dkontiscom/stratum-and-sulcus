@@ -1,0 +1,173 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+		/* Begin PBXBuildFile section */
+		AA01 /* StratumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11; };
+		AA02 /* DockerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA12; };
+		AA03 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA13; };
+		/* End PBXBuildFile section */
+
+		/* Begin PBXFileReference section */
+		AA00 /* StratumApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StratumApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA11 /* StratumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StratumApp.swift; sourceTree = "<group>"; };
+		AA12 /* DockerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockerService.swift; sourceTree = "<group>"; };
+		AA13 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		AA14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		/* End PBXFileReference section */
+
+		/* Begin PBXGroup section */
+		AAG0 = {
+			isa = PBXGroup;
+			children = (AAG1, AAG2);
+			sourceTree = "<group>";
+		};
+		AAG1 /* StratumApp */ = {
+			isa = PBXGroup;
+			children = (AA11, AA12, AA13, AA14);
+			path = StratumApp;
+			sourceTree = "<group>";
+		};
+		AAG2 /* Products */ = {
+			isa = PBXGroup;
+			children = (AA00);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		/* End PBXGroup section */
+
+		/* Begin PBXNativeTarget section */
+		AAT0 /* StratumApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AACL0;
+			buildPhases = (AABP0, AABP1);
+			buildRules = ();
+			dependencies = ();
+			name = StratumApp;
+			productName = StratumApp;
+			productReference = AA00;
+			productType = "com.apple.product-type.application";
+		};
+		/* End PBXNativeTarget section */
+
+		/* Begin PBXProject section */
+		AAP0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {LastSwiftUpdateCheck = 1500; LastUpgradeCheck = 1500; };
+			buildConfigurationList = AACL1;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base);
+			mainGroup = AAG0;
+			productRefGroup = AAG2;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (AAT0);
+		};
+		/* End PBXProject section */
+
+		/* Begin PBXSourcesBuildPhase section */
+		AABP0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (AA01, AA02, AA03);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		/* End PBXSourcesBuildPhase section */
+
+		/* Begin PBXFrameworksBuildPhase section */
+		AABP1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		/* End PBXFrameworksBuildPhase section */
+
+		/* Begin XCBuildConfiguration section */
+		AACF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StratumApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkontis.StratumApp;
+				PRODUCT_NAME = StratumApp;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AACF1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StratumApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkontis.StratumApp;
+				PRODUCT_NAME = StratumApp;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AACF2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AACF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		/* End XCBuildConfiguration section */
+
+		/* Begin XCConfigurationList section */
+		AACL0 /* Build configuration list for PBXNativeTarget "StratumApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (AACF0, AACF1);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AACL1 /* Build configuration list for PBXProject "StratumApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (AACF2, AACF3);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		/* End XCConfigurationList section */
+	};
+	rootObject = AAP0;
+}

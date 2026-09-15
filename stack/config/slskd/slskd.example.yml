@@ -1,0 +1,19 @@
+soulseek:
+  username: your-soulseek-username
+  password: "your-soulseek-password"
+  listen_port: 50300
+
+directories:
+  downloads: /music/downloads
+  incomplete: /music/downloads/.incomplete
+
+shares:
+  directories:
+    - /music
+
+web:
+  port: 5030
+  authentication:
+    disabled: false
+    username: slskd
+    password: your-slskd-web-password

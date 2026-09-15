@@ -1,0 +1,105 @@
+# Stratum Mac Stack
+# No Mountain Duck, no FUSE mounts.
+#
+# Flow:
+#   slskd downloads → data/staging/
+#   soulsync watches staging → enriches → organizes → data/transfer/
+#   soulsync Batch Complete → webhook → webhook-receiver → sync container
+#   sync: uploads data/transfer/ to Garage S3, pushes soulsync metadata to D1
+#   Stratum cron / soulsync Auto-Update handles startScan
+
+services:
+
+  # ── slskd ─────────────────────────────────────────────────────────────────
+  slskd:
+    image: slskd/slskd:latest
+    container_name: slskd
+    restart: unless-stopped
+    environment:
+      SLSKD_REMOTE_CONFIGURATION: "true"
+      SLSKD_API_KEY: "${SLSKD_API_KEY}"
+      SLSKD_DOWNLOADS_DIR: /staging
+      SLSKD_SHARED_DIR: /music
+    volumes:
+      - ./data/slskd:/app
+      - ./data/staging:/staging
+      - ./data/transfer:/music:ro
+    ports:
+      - "127.0.0.1:5030:5030"
+      - "50300:50300"
+
+  # ── soulsync ──────────────────────────────────────────────────────────────
+  soulsync:
+    image: ghcr.io/nezreka/soulsync:latest
+    container_name: soulsync
+    restart: unless-stopped
+    environment:
+      LASTFM_API_KEY: "${LASTFM_API_KEY}"
+      LASTFM_SECRET: "${LASTFM_SECRET}"
+      DISCOGS_TOKEN: "${DISCOGS_TOKEN}"
+      GENIUS_CLIENT_ID: "${GENIUS_CLIENT_ID}"
+      GENIUS_CLIENT_SECRET: "${GENIUS_CLIENT_SECRET}"
+      ACOUSTID_API_KEY: "${ACOUSTID_API_KEY}"
+      LISTENBRAINZ_TOKEN: "${LISTENBRAINZ_TOKEN}"
+      SPOTIFY_CLIENT_ID: "${SPOTIFY_CLIENT_ID}"
+      SPOTIFY_CLIENT_SECRET: "${SPOTIFY_CLIENT_SECRET}"
+    volumes:
+      - ./data/soulsync:/app/data
+      - ./config/soulsync:/app/config
+      - ./data/staging:/app/Staging
+      - ./data/transfer:/app/Transfer
+    ports:
+      - "127.0.0.1:8008:8008"
+
+  # ── webhook-receiver ──────────────────────────────────────────────────────
+  # Receives soulsync "Batch Complete" webhook → triggers sync container
+  # soulsync automation: Batch Complete → POST http://webhook-receiver:9000
+  webhook-receiver:
+    build: ./webhook-receiver
+    container_name: webhook-receiver
+    restart: unless-stopped
+    environment:
+      PORT: "9000"
+      HOST_PROJECT_DIR: "${MAC_STACK_DIR}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/project:ro
+    ports:
+      - "127.0.0.1:9000:9000"
+
+  # ── sync ──────────────────────────────────────────────────────────────────
+  # Run on demand (manual): docker compose --profile sync run --rm sync
+  # Auto-triggered by webhook-receiver after soulsync Batch Complete
+  # 1. Uploads data/transfer/ to Garage S3 (verify size, delete local)
+  # 2. Reads soulsync SQLite → pushes enriched metadata to D1
+  sync:
+    build: ./sync
+    restart: "no"
+    profiles:
+      - sync
+    environment:
+      S3_ENDPOINT: "${S3_ENDPOINT}"
+      S3_BUCKET: "${S3_BUCKET}"
+      S3_REGION: "${S3_REGION}"
+      GARAGE_ACCESS: "${S3_ACCESS_KEY}"
+      GARAGE_SECRET: "${S3_SECRET_KEY}"
+      CF_ACCOUNT: "${CF_ACCOUNT}"
+      CF_API_TOKEN: "${CF_API_TOKEN}"
+      D1_DATABASE_ID: "${D1_DATABASE_ID}"
+      STRATUM_URL: "${STRATUM_URL}"
+      STRATUM_USER: "${STRATUM_USER}"
+      STRATUM_PASS: "${STRATUM_PASS}"
+      MUSIC_DIR: /transfer
+      SOULSYNC_DB: /soulsync/music_library.db
+    volumes:
+      - ./data/transfer:/transfer
+      - ./data/soulsync:/soulsync:ro
+
+  # ── cloudflared — optional remote access ──────────────────────────────────
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-mac
+    restart: unless-stopped
+    profiles:
+      - tunnel
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}

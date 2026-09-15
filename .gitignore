@@ -1,0 +1,42 @@
+# Personal deployment config — never commit
+STATUS.md
+macbookair
+ssh-lxc.sh
+ssh-oci.sh
+stratum\ tasks
+stratum tasks
+stack/deploy-mac.sh
+
+# Stack secrets
+stack/.env
+stack/data/
+stack/config/soulsync/config.json
+stack/config/slskd/slskd.yml
+
+# Wrangler deployment config (has your real D1 ID — keep local)
+stratum/wrangler.jsonc
+stratum/.wrangler/
+
+# Node
+node_modules/
+*/node_modules/
+
+# Build artifacts
+dist/
+*.js.map
+
+# macOS
+.DS_Store
+**/.DS_Store
+.duckversions/
+.auto-claude/
+
+# Backups
+*.bak
+sync.mjs.bak
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal
+stack/config.json

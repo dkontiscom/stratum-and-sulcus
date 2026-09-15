@@ -1,0 +1,30 @@
+name: Deploy Stratum Worker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "stratum/**"
+      - ".github/workflows/deploy.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Cloudflare Workers
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          workingDirectory: stratum
+          secrets: |
+            ADMIN_PASSWORD
+            S3_ACCESS_KEY
+            S3_SECRET_KEY
+        env:
+          ADMIN_PASSWORD: ${{ secrets.STRATUM_ADMIN_PASSWORD }}
+          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+          S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}

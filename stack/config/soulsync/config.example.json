@@ -1,0 +1,35 @@
+{
+    "active_media_server": "navidrome",
+    "navidrome": {
+        "base_url": "https://YOUR-STRATUM-WORKER.workers.dev",
+        "username": "admin",
+        "password": "YOUR-STRATUM-PASSWORD",
+        "auto_detect": true
+    },
+    "spotify": { "client_id": "", "client_secret": "", "redirect_uri": "http://127.0.0.1:8888/callback" },
+    "tidal": { "client_id": "", "client_secret": "", "redirect_uri": "http://127.0.0.1:8889/tidal/callback" },
+    "soulseek": {
+        "slskd_url": "http://slskd:5030",
+        "api_key": "YOUR-SLSKD-API-KEY",
+        "download_path": "/app/Staging",
+        "transfer_path": "/app/Transfer",
+        "search_timeout": 60,
+        "search_timeout_buffer": 15
+    },
+    "logging": { "path": "logs/app.log", "level": "INFO" },
+    "database": { "path": "database/music_library.db", "max_workers": 5 },
+    "metadata_enhancement": { "enabled": true, "embed_album_art": true, "single_to_album": false },
+    "file_organization": {
+        "enabled": true,
+        "templates": {
+            "album_path": "$albumartist/$album/$track - $title",
+            "single_path": "$artist/$title",
+            "compilation_path": "Compilations/$album/$track - $artist - $title",
+            "playlist_path": "$playlist/$artist - $title"
+        }
+    },
+    "import": { "staging_path": "/app/Staging", "replace_lower_quality": false, "folder_artist_override": true },
+    "lossy_copy": { "enabled": false, "bitrate": "320", "downsample_hires": false },
+    "playlist_sync": { "create_backup": true },
+    "listenbrainz": { "token": "YOUR-LISTENBRAINZ-TOKEN" }
+}
